@@ -1,3 +1,4 @@
+import MovieCard from "@/components/MovieCard";
 import SearchBar from "@/components/SearchBar";
 import { icons } from "@/constants/icons";
 import { images } from "@/constants/images";
@@ -60,14 +61,7 @@ export default function Index() {
                 data={movies}
                 keyExtractor={(item) => item.id}
                 renderItem={({ item }) => (
-                  <View>
-                    <Image
-                      source={{ uri: item.poster_path }}
-                      resizeMode="contain"
-                      className="w-24 h-42"
-                    />
-                    <Text className="text-white">{item.title}</Text>
-                  </View>
+                  <MovieCard {...item}/>
                 )}
                 numColumns={3}
                 columnWrapperStyle={{
