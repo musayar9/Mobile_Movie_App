@@ -1,10 +1,88 @@
-import { Link } from "expo-router";
-import { Text, View } from "react-native";
+import SearchBar from "@/components/SearchBar";
+import { icons } from "@/constants/icons";
+import { images } from "@/constants/images";
+import { fetchPopularMovies } from "@/services/api";
+import useFetch from "@/services/useFetch";
+import { Link, useRouter } from "expo-router";
+import {
+  ActivityIndicator,
+  Image,
+  ScrollView,
+  StatusBar,
+  Text,
+  View,
+  FlatList,
+} from "react-native";
 
 export default function Index() {
+  const router = useRouter();
+  const {
+    data: movies,
+    loading: moviesLoading,
+    error: moviesError,
+  } = useFetch(() => fetchPopularMovies({ query: "" }));
+
   return (
-    <View className="flex-1 justify-center items-center">
-      <Text className="text-dark-200 text-6xl font-bold">Welcome!</Text>
+    <View className="flex-1 bg-primary">
+      <StatusBar
+        translucent
+        backgroundColor="rgba(0, 0, 0, 0)"
+        barStyle="light-content"
+      />
+      <Image source={images.bg} className="w-full absolute z-0" />
+      <ScrollView
+        className="flex-1 px-5"
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={{ minHeight: "100%", paddingBottom: 10 }}
+      >
+        <Image source={icons.logo} className="w-12 h-10 mt-20 mb-5 mx-auto" />
+        {moviesLoading ? (
+          <ActivityIndicator
+            size={"large"}
+            color="#0000ff"
+            className="mt-10 self-center"
+          />
+        ) : moviesError ? (
+          <Text>Error: {moviesError?.message}</Text>
+        ) : (
+          <View className="flex-1 mt-5">
+            <SearchBar
+              onPress={() => router.push("/search")}
+              placeholder="Search for a movie"
+            />
+
+            <View>
+              <Text className="text-lg text-white font-bold mt-5 mb-3">
+                Latest Movies
+              </Text>
+
+              <FlatList
+                data={movies}
+                keyExtractor={(item) => item.id}
+                renderItem={({ item }) => (
+                  <View>
+                    <Image
+                      source={{ uri: item.poster_path }}
+                      resizeMode="contain"
+                      className="w-24 h-42"
+                    />
+                    <Text className="text-white">{item.title}</Text>
+                  </View>
+                )}
+                numColumns={3}
+                columnWrapperStyle={{
+                  justifyContent: "flex-start",
+                  gap: 20,
+                  paddingRight: 5,
+                  marginBottom: 10,
+                }}
+                className="mt-2 pb-32"
+                scrollEnabled={false}
+              />
+            </View>
+          </View>
+        )}
+      </ScrollView>
     </View>
   );
 }
