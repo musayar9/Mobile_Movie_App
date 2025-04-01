@@ -1,4 +1,5 @@
 import MovieCard from "@/components/MovieCard";
+import PageLayout from "@/components/PageLayout";
 import SearchBar from "@/components/SearchBar";
 import { icons } from "@/constants/icons";
 import { images } from "@/constants/images";
@@ -24,13 +25,7 @@ export default function Index() {
   } = useFetch(() => fetchPopularMovies({ query: "" }));
 
   return (
-    <View className="flex-1 bg-primary">
-      <StatusBar
-        translucent
-        backgroundColor="rgba(0, 0, 0, 0)"
-        barStyle="light-content"
-      />
-      <Image source={images.bg} className="w-full absolute z-0" />
+    <PageLayout>
       <ScrollView
         className="flex-1 px-5"
         showsVerticalScrollIndicator={false}
@@ -60,9 +55,7 @@ export default function Index() {
               <FlatList
                 data={movies}
                 keyExtractor={(item) => item.id}
-                renderItem={({ item }) => (
-                  <MovieCard {...item}/>
-                )}
+                renderItem={({ item }) => <MovieCard {...item} />}
                 numColumns={3}
                 columnWrapperStyle={{
                   justifyContent: "flex-start",
@@ -77,6 +70,6 @@ export default function Index() {
           </View>
         )}
       </ScrollView>
-    </View>
+    </PageLayout>
   );
 }
