@@ -7,7 +7,6 @@
     "icon": "./assets/images/logo.png",
     "scheme": "movies",
     "userInterfaceStyle": "automatic",
-
     "newArchEnabled": true,
     "ios": {
       "supportsTablet": true
@@ -16,7 +15,8 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/logo.png",
         "backgroundColor": "#000000"
-      }
+      },
+      "package": "com.sayarmusa.mobile_movie_app"
     },
     "web": {
       "bundler": "metro",
@@ -37,6 +37,14 @@
     ],
     "experiments": {
       "typedRoutes": true
+    },
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "d614eb7c-50d6-4464-9f8a-bf96446b6856"
+      }
     }
   }
 }
