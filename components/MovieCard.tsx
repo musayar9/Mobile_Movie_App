@@ -30,7 +30,9 @@ const MovieCard = ({
           resizeMode="cover"
         />
 
-        <Text className="text-sm font-bold text-white mt-2"  numberOfLines={1}>{title}</Text>
+        <Text className="text-sm font-bold text-white mt-2" numberOfLines={1}>
+          {title}
+        </Text>
 
         <View className="flex-row items-center justify-center gap-x-1 absolute bottom-10 right-2 border border-white h-10 w-10 rounded-full  bg-[rgba(0,0,0,0.3)]">
           <Image className="size-3" source={icons.star} />
