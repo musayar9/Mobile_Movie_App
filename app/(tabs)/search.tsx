@@ -16,6 +16,7 @@ import { fetchPopularMovies } from "@/services/api";
 import useFetch from "@/services/useFetch";
 import { icons } from "@/constants/icons";
 import SearchBar from "@/components/SearchBar";
+import { updateSearchCount } from "@/services/appwrite";
 
 const Search = () => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -39,10 +40,14 @@ const Search = () => {
     // };
     // func();
     /**Burada search alanında setTİmeout kullanıyoruz search bar için aranan kelimeyi girmeyi bitirdiğimizdem 500 milisayniye sonra arama işlemi gerçeklşecevek */
-
+    updateSearchCount(searchQuery, movies);
     const timeoutId = setTimeout(async () => {
       if (searchQuery.trim()) {
         await loadMovie();
+
+        if (movies.length > 0 && movies?.[0]) {
+          await updateSearchCount(searchQuery, movies[0]);
+        }
       } else {
         reset();
       }
@@ -100,13 +105,14 @@ const Search = () => {
             )}
           </>
         }
-
         ListEmptyComponent={
-          !loading && !error ?(<View className="mt-10 px-5">
+          !loading && !error ? (
+            <View className="mt-10 px-5">
               <Text className="text-center text-gray-500">
-                {searchQuery.trim() ? 'No movies found' : 'Search for a movie'}
+                {searchQuery.trim() ? "No movies found" : "Search for a movie"}
               </Text>
-          </View> ) : null
+            </View>
+          ) : null
         }
       />
     </PageLayout>
