@@ -58,7 +58,7 @@ export const fetchMovieDetails = async (
 
     if (!response.ok) throw new Error("Failed to fetch movie details");
     const data = await response.json();
-    console.log("data", data);
+
     return data;
   } catch (error) {
     console.log("erroValue", error);

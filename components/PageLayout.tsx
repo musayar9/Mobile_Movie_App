@@ -4,12 +4,12 @@ import { images } from "@/constants/images";
 
 const PageLayout = ({ children }: { children: React.ReactNode }) => {
   return (
-    <View className="flex-1 bg-primary">
-      <StatusBar
+    <View className="flex-1 bg-primary relative">
+      {/* <StatusBar
         translucent
-        backgroundColor="rgba(0, 0, 0, 0)"
+        backgroundColor="transparent"
         barStyle="light-content"
-      />
+      /> */}
       <Image source={images.bg} className="w-full absolute z-0" />
 
       {children}
